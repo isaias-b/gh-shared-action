@@ -1,0 +1,15 @@
+{
+  "name": "cli",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "greet": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "bun build src/index.ts --target=node --outfile=dist/index.js && chmod +x dist/index.js"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "shared": "workspace:*"
+  }
+}

@@ -1,9 +1,10 @@
 import * as core from "@actions/core";
+import { createGreeting } from "../../shared/src/index.js";
 
 async function run() {
   try {
     const name = core.getInput("name") || "world";
-    const greeting = `hello, ${name}!`
+    const greeting = createGreeting(name);
     core.info(greeting);
     core.setOutput("greeting", greeting);
   } catch (err: unknown) {

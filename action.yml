@@ -13,4 +13,4 @@ outputs:
     description: "The greeting that was printed"
 runs:
   using: "node20"
-  main: "dist/index.cjs"
+  main: "packages/gh-action/dist/index.cjs"

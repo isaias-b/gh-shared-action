@@ -2,11 +2,14 @@
   "name": "gh-shared-action",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "build": "bun build src/index.ts --format=cjs --target node --outfile=dist/index.cjs --sourcemap"
-  },
-  "dependencies": {
-    "@actions/core": "^1.11.1"
+    "build": "bun run build:shared && bun run build:cli && bun run build:action",
+    "build:shared": "cd packages/shared && bun run build",
+    "build:cli": "cd packages/cli && bun run build", 
+    "build:action": "cd packages/gh-action && bun run build"
   },
   "engines": {
     "node": ">=20"
