@@ -18,7 +18,7 @@ This action prints a greeting message and outputs it for use in other workflow s
 
 ```yaml
 - name: Run greeting action
-  uses: isaias-b/gh-shared-action@v1
+  uses: isaias-b/gh-shared-action@v0
   id: hello
   with:
     name: 'GitHub'
