@@ -2,7 +2,11 @@
   "name": "shared",
   "private": true,
   "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "scripts": {
-    "build": "echo 'Shared package - no build needed for now'"
+    "build": "bun build src/index.ts --target=node --outfile=dist/index.js"
   }
 }

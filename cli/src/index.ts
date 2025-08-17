@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { createGreeting } from "../shared/src/index.js";
+import { createGreeting } from "shared";
 
 const program = new Command();
 

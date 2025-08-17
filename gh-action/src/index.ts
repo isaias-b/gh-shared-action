@@ -1,5 +1,5 @@
 import * as core from "@actions/core";
-import { createGreeting } from "../shared/src/index.js";
+import { createGreeting } from "shared";
 
 async function run() {
   try {
