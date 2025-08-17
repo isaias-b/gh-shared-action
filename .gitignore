@@ -1,0 +1,2 @@
+node_modules/
+# keep dist/ tracked for the Action

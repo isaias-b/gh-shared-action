@@ -1,0 +1,40 @@
+name: release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release (e.g. 1.0.0)"
+        required: true
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: oven-sh/setup-bun@v1
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+
+      - name: Commit dist if changed
+        run: |
+          if ! git diff --quiet -- dist; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add dist
+            git commit -m "chore: build dist for v${{ inputs.version }}"
+          fi
+
+      - name: Create/force version tag
+        run: |
+          git tag -f "v${{ inputs.version }}"
+          git push -f origin "v${{ inputs.version }}"
+
+      - name: Move major tag (v1, v2, ...)
+        run: |
+          MAJOR="v${{ inputs.version%%.* }}"
+          git tag -f "$MAJOR" "v${{ inputs.version }}"
+          git push -f origin "$MAJOR"
