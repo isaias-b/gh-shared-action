@@ -1,10 +1,8 @@
 name: release
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Version to release (e.g. 1.0.0)"
-        required: true
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags like v1.0.0, v0.0.3, etc.
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -19,22 +17,25 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bun run build
 
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
       - name: Commit dist if changed
         run: |
-          if ! git diff --quiet -- dist; then
+          if ! git diff --quiet -- cli/dist gh-action/dist shared/dist; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add dist
-            git commit -m "chore: build dist for v${{ inputs.version }}"
+            git add cli/dist gh-action/dist shared/dist
+            git commit -m "chore: build dist for ${{ steps.version.outputs.tag }}"
+            git push origin HEAD:main
           fi
-
-      - name: Create/force version tag
-        run: |
-          git tag -f "v${{ inputs.version }}"
-          git push -f origin "v${{ inputs.version }}"
 
       - name: Move major tag (v1, v2, ...)
         run: |
-          MAJOR="v$(echo "${{ inputs.version }}" | cut -d. -f1)"
-          git tag -f "$MAJOR" "v${{ inputs.version }}"
+          MAJOR="v$(echo "${{ steps.version.outputs.version }}" | cut -d. -f1)"
+          git tag -f "$MAJOR" "${{ steps.version.outputs.tag }}"
           git push -f origin "$MAJOR"
