@@ -1876,7 +1876,7 @@ var {
 
 // ../shared/src/index.ts
 function createGreeting(name = "world") {
-  return `hello, ${name}!`;
+  return `FANCY GREETER: hello, ${name}!`;
 }
 
 // src/index.ts
