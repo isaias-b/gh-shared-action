@@ -35,6 +35,6 @@ jobs:
 
       - name: Move major tag (v1, v2, ...)
         run: |
-          MAJOR="v${{ inputs.version%%.* }}"
+          MAJOR="v$(echo "${{ inputs.version }}" | cut -d. -f1)"
           git tag -f "$MAJOR" "v${{ inputs.version }}"
           git push -f origin "$MAJOR"
