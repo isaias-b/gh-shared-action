@@ -294,7 +294,8 @@ var require_help = __commonJS((exports) => {
         return term;
       }
       function formatList(textArray) {
-        return textArray.join("\n").replace(/^/gm, " ".repeat(itemIndentWidth));
+        return textArray.join(`
+`).replace(/^/gm, " ".repeat(itemIndentWidth));
       }
       let output = [`Usage: ${helper.commandUsage(cmd)}`, ""];
       const commandDescription = helper.commandDescription(cmd);
@@ -334,13 +335,14 @@ var require_help = __commonJS((exports) => {
       if (commandList.length > 0) {
         output = output.concat(["Commands:", formatList(commandList), ""]);
       }
-      return output.join("\n");
+      return output.join(`
+`);
     }
     padWidth(cmd, helper) {
       return Math.max(helper.longestOptionTermLength(cmd, helper), helper.longestGlobalOptionTermLength(cmd, helper), helper.longestSubcommandTermLength(cmd, helper), helper.longestArgumentTermLength(cmd, helper));
     }
     wrap(str, width, indent, minColumnWidth = 40) {
-      const indents = " \\f\\t\\v\xA0\u1680\u2000-\u200A\u202F\u205F\u3000\uFEFF";
+      const indents = " \\f\\t\\v   -   　\uFEFF";
       const manualIndent = new RegExp(`[\\n][${indents}]+`);
       if (str.match(manualIndent))
         return str;
@@ -348,17 +350,22 @@ var require_help = __commonJS((exports) => {
       if (columnWidth < minColumnWidth)
         return str;
       const leadingStr = str.slice(0, indent);
-      const columnText = str.slice(indent).replace("\r\n", "\n");
+      const columnText = str.slice(indent).replace(`\r
+`, `
+`);
       const indentString = " ".repeat(indent);
-      const zeroWidthSpace = "\u200B";
+      const zeroWidthSpace = "​";
       const breaks = `\\s${zeroWidthSpace}`;
-      const regex = new RegExp(`\n|.{1,${columnWidth - 1}}([${breaks}]|\$)|[^${breaks}]+?([${breaks}]|\$)`, "g");
+      const regex = new RegExp(`
+|.{1,${columnWidth - 1}}([${breaks}]|$)|[^${breaks}]+?([${breaks}]|$)`, "g");
       const lines = columnText.match(regex) || [];
       return leadingStr + lines.map((line, i) => {
-        if (line === "\n")
+        if (line === `
+`)
           return "";
         return (i > 0 ? indentString : "") + line.trimEnd();
-      }).join("\n");
+      }).join(`
+`);
     }
   }
   exports.Help = Help;
@@ -576,10 +583,12 @@ var require_suggestSimilar = __commonJS((exports) => {
       similar = similar.map((candidate) => `--${candidate}`);
     }
     if (similar.length > 1) {
-      return `\n(Did you mean one of ${similar.join(", ")}?)`;
+      return `
+(Did you mean one of ${similar.join(", ")}?)`;
     }
     if (similar.length === 1) {
-      return `\n(Did you mean ${similar[0]}?)`;
+      return `
+(Did you mean ${similar[0]}?)`;
     }
     return "";
   }
@@ -824,8 +833,7 @@ Expecting one of '${allowedValues.join("', '")}'`);
         this._exitCallback = (err) => {
           if (err.code !== "commander.executeSubCommandAsync") {
             throw err;
-          } else {
-          }
+          } else {}
         };
       }
       return this;
@@ -1495,11 +1503,14 @@ Expecting one of '${allowedValues.join("', '")}'`);
       return this._getCommandAndAncestors().reduce((combinedOptions, cmd) => Object.assign(combinedOptions, cmd.opts()), {});
     }
     error(message, errorOptions) {
-      this._outputConfiguration.outputError(`${message}\n`, this._outputConfiguration.writeErr);
+      this._outputConfiguration.outputError(`${message}
+`, this._outputConfiguration.writeErr);
       if (typeof this._showHelpAfterError === "string") {
-        this._outputConfiguration.writeErr(`${this._showHelpAfterError}\n`);
+        this._outputConfiguration.writeErr(`${this._showHelpAfterError}
+`);
       } else if (this._showHelpAfterError) {
-        this._outputConfiguration.writeErr("\n");
+        this._outputConfiguration.writeErr(`
+`);
         this.outputHelp({ error: true });
       }
       const config = errorOptions || {};
@@ -1618,7 +1629,8 @@ Expecting one of '${allowedValues.join("', '")}'`);
       this._versionOptionName = versionOption.attributeName();
       this._registerOption(versionOption);
       this.on("option:" + versionOption.name(), () => {
-        this._outputConfiguration.writeOut(`${str}\n`);
+        this._outputConfiguration.writeOut(`${str}
+`);
         this._exit(0, "commander.version", str);
       });
       return this;
@@ -1779,7 +1791,8 @@ Expecting one of '${allowedValues.join("', '")}'`);
           helpStr = text;
         }
         if (helpStr) {
-          context.write(`${helpStr}\n`);
+          context.write(`${helpStr}
+`);
         }
       });
       return this;
@@ -1861,8 +1874,12 @@ var {
   Help
 } = import__.default;
 
+// ../shared/src/index.ts
+function createGreeting(name = "world") {
+  return `hello, ${name}!`;
+}
+
 // src/index.ts
-import { createGreeting } from "shared";
 var program2 = new Command;
 program2.name("greet").description("Simple greeting CLI").version("0.0.1");
 program2.command("hello").description("Say hello to someone").argument("[name]", "name to greet", "world").action((name) => {
