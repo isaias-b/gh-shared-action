@@ -1881,6 +1881,9 @@ function createGreeting(name = "world") {
 function createRepeater(input) {
   return `REPEATER: I repeat what you say... "${input}"`;
 }
+function createUppercase(input) {
+  return `UPPERCASE: ${input.toUpperCase()}`;
+}
 
 // src/index.ts
 var program2 = new Command;
@@ -1892,5 +1895,9 @@ program2.command("hello").description("Say hello to someone").argument("[name]",
 program2.command("repeat").description("Repeat what you say").argument("<input>", "text to repeat").action((input) => {
   const repeated = createRepeater(input);
   console.log(repeated);
+});
+program2.command("uppercase").description("Convert text to uppercase").argument("<input>", "text to convert").action((input) => {
+  const uppercase = createUppercase(input);
+  console.log(uppercase);
 });
 program2.parse();

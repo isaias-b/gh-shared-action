@@ -4,18 +4,27 @@ branding:
   color: "blue"
   icon: "smile"
 inputs:
+  action:
+    description: "Action to perform: 'greet', 'repeat', or 'uppercase'"
+    required: false
+    default: "greet"
   name:
-    description: "Name to greet"
+    description: "Name to greet (used with 'greet' action)"
     required: false
     default: "world"
+  message:
+    description: "Message to repeat (used with 'repeat' action) or text to uppercase (used with 'uppercase' action)"
+    required: false
   repeat:
-    description: "Text to repeat (if provided, will use repeater instead of greeter)"
+    description: "DEPRECATED: Use 'action: repeat' and 'message' instead. Legacy support for backward compatibility."
     required: false
 outputs:
   greeting:
     description: "The greeting that was printed"
   repeated:
-    description: "The repeated text (if repeat input was provided)"
+    description: "The repeated text (if repeat action was used)"
+  uppercase:
+    description: "The uppercase text (if uppercase action was used)"
 runs:
   using: "node20"
   main: "gh-action/dist/index.cjs"

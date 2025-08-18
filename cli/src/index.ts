@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { createGreeting, createRepeater } from "shared";
+import { createGreeting, createRepeater, createUppercase } from "shared";
 
 const program = new Command();
 
@@ -26,6 +26,15 @@ program
   .action((input: string) => {
     const repeated = createRepeater(input);
     console.log(repeated);
+  });
+
+program
+  .command("uppercase")
+  .description("Convert text to uppercase")
+  .argument("<input>", "text to convert")
+  .action((input: string) => {
+    const uppercase = createUppercase(input);
+    console.log(uppercase);
   });
 
 program.parse();

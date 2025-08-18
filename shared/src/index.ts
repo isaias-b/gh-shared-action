@@ -5,3 +5,7 @@ export function createGreeting(name: string = "world"): string {
 export function createRepeater(input: string): string {
   return `REPEATER: I repeat what you say... "${input}"`;
 }
+
+export function createUppercase(input: string): string {
+  return `UPPERCASE: ${input.toUpperCase()}`;
+}
