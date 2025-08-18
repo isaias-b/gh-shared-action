@@ -8,9 +8,14 @@ inputs:
     description: "Name to greet"
     required: false
     default: "world"
+  repeat:
+    description: "Text to repeat (if provided, will use repeater instead of greeter)"
+    required: false
 outputs:
   greeting:
     description: "The greeting that was printed"
+  repeated:
+    description: "The repeated text (if repeat input was provided)"
 runs:
   using: "node20"
   main: "gh-action/dist/index.cjs"

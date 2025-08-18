@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { createGreeting } from "shared";
+import { createGreeting, createRepeater } from "shared";
 
 const program = new Command();
 
@@ -17,6 +17,15 @@ program
   .action((name: string) => {
     const greeting = createGreeting(name);
     console.log(greeting);
+  });
+
+program
+  .command("repeat")
+  .description("Repeat what you say")
+  .argument("<input>", "text to repeat")
+  .action((input: string) => {
+    const repeated = createRepeater(input);
+    console.log(repeated);
   });
 
 program.parse();
