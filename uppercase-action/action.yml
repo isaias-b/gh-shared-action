@@ -1,0 +1,15 @@
+name: "Uppercase"
+description: "Converts text to uppercase with formatting"
+branding:
+  color: "yellow"
+  icon: "type"
+inputs:
+  message:
+    description: "Text to convert to uppercase"
+    required: true
+outputs:
+  uppercase:
+    description: "The uppercase text that was printed"
+runs:
+  using: "node20"
+  main: "dist/index.cjs"

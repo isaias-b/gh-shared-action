@@ -1,0 +1,15 @@
+name: "Repeat"
+description: "Repeats a message with formatting"
+branding:
+  color: "green"
+  icon: "repeat"
+inputs:
+  message:
+    description: "Message to repeat"
+    required: true
+outputs:
+  repeated:
+    description: "The repeated message that was printed"
+runs:
+  using: "node20"
+  main: "dist/index.cjs"

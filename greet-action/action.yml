@@ -1,0 +1,16 @@
+name: "Greet"
+description: "Prints a personalized greeting"
+branding:
+  color: "blue"
+  icon: "smile"
+inputs:
+  name:
+    description: "Name to greet"
+    required: false
+    default: "world"
+outputs:
+  greeting:
+    description: "The greeting that was printed"
+runs:
+  using: "node20"
+  main: "dist/index.cjs"

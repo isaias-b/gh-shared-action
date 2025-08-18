@@ -26,10 +26,10 @@ jobs:
 
       - name: Commit dist if changed
         run: |
-          if ! git diff --quiet -- cli/dist gh-action/dist shared/dist; then
+          if ! git diff --quiet -- cli/dist shared/dist greet-action/dist repeat-action/dist uppercase-action/dist gh-action/dist; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add cli/dist gh-action/dist shared/dist
+            git add cli/dist shared/dist greet-action/dist repeat-action/dist uppercase-action/dist gh-action/dist
             git commit -m "chore: build dist for ${{ steps.version.outputs.tag }}"
             git push origin HEAD:main
           fi
