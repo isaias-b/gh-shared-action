@@ -35,8 +35,7 @@ gh-shared-action/
 ├── cli/             # Command-line interface (all actions)
 ├── greet-action/    # Dedicated greet action
 ├── repeat-action/   # Dedicated repeat action
-├── uppercase-action/# Dedicated uppercase action
-└── gh-action/       # Legacy multi-action (deprecated)
+└── uppercase-action/# Dedicated uppercase action
 ```
 
 ### Benefits

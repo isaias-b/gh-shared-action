@@ -2,10 +2,9 @@
   "name": "gh-shared-action",
   "private": true,
   "type": "module",
-    "workspaces": [
+  "workspaces": [
     "shared",
     "cli",
-    "gh-action",
     "greet-action",
     "repeat-action",
     "uppercase-action"
@@ -17,8 +16,7 @@
     "build:actions": "bun run build:greet && bun run build:repeat && bun run build:uppercase",
     "build:greet": "cd greet-action && bun run build",
     "build:repeat": "cd repeat-action && bun run build", 
-    "build:uppercase": "cd uppercase-action && bun run build",
-    "build:legacy": "cd gh-action && bun run build"
+    "build:uppercase": "cd uppercase-action && bun run build"
   },
   "engines": {
     "node": ">=20"
